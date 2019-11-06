@@ -2,5 +2,6 @@
     "files.associations": {
         "*.ml": "ocaml",
         "*.mli": "ocaml"
-    }
+    },
+    "editor.formatOnSave": true
 }
