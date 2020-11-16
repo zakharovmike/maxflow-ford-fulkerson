@@ -99,3 +99,27 @@ let from_file path =
   close_in infile ;
   final_graph
 
+let export path graph =
+
+  (* Open a write-file. *)
+  let ff = open_out path in
+
+  (* Write dot file header. *)
+  fprintf ff "digraph finite_state_machine {\n" ;
+  fprintf ff "    rankdir=LR;\n" ;
+  fprintf ff "    size=\"10\"\n" ;
+  fprintf ff "    node [shape = circle];\n" ;
+
+  (* Write all arcs with their labels. *)
+  e_iter graph (fun id1 id2 lbl -> 
+      fprintf ff "    %s -> %s [ label = \"%s\" ];\n"
+        (string_of_int id1)
+        (string_of_int id2)
+        lbl
+    ) ;
+
+  (* Write end of dot file. *)
+  fprintf ff "}\n" ;
+
+  close_out ff ;
+  ()

@@ -18,3 +18,6 @@ demo: build
 clean:
 	-rm -rf _build/
 	-rm ftest.native
+
+gviz: demo
+	dot -Tsvg gviz_out > gviz_out.svg

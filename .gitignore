@@ -2,3 +2,4 @@ _build/
 ftest.native
 outfile
 *~
+gviz_out*

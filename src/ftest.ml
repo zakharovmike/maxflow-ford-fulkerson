@@ -1,4 +1,5 @@
 open Gfile
+open Tools
 
 let () =
 
@@ -22,6 +23,9 @@ let () =
 
   (* Open file *)
   let graph = from_file infile in
+
+  (* Export graph in dot format to visualize with Graphviz *)
+  let () = export "gviz_out" graph in
 
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
