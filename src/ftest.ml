@@ -28,8 +28,8 @@ let () =
   (* Export graph in dot format to visualize with Graphviz *)
   let () = export "gviz_out" graph in
 
+  (* Convert to int graph and find its max flow from source to sink *)
   let int_graph = gmap graph int_of_string in
-
   let flow = get_max_flow int_graph source sink in
   Printf.printf "\nmax flow from %d to %d: %d\n%!" source sink flow ;
 

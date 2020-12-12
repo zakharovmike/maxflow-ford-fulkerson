@@ -21,3 +21,8 @@ clean:
 
 gviz: demo
 	dot -Tsvg gviz_out > gviz_out.svg
+
+test:
+	ocamlbuild -use-ocamlfind tests.byte
+	./tests.byte
+	-rm tests.byte
