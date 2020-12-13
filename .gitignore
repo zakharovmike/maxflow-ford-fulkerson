@@ -2,5 +2,6 @@ _build/
 ftest.native
 outfile
 *~
-gviz_out*
+*.gv
+*.svg
 .DS_Store

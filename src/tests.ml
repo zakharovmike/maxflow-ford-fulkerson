@@ -47,10 +47,10 @@ let suite =
     "graph2 :: 0 -> 5">:: test_graph2_1;
     "graph2 :: 0 -> 4">:: test_graph2_2;
     "graph2 :: 0 -> 3">:: test_graph2_3;
-    
+
     "graph3 :: 0 -> 5">:: test_graph3_1;
     "graph3 :: 0 -> 3">:: test_graph3_3;
-    
+
     "graph4 :: 0 -> 7">:: test_graph4_1;
     "graph4 :: 0 -> 6">:: test_graph4_2;
     "graph4 :: 0 -> 4">:: test_graph4_3;

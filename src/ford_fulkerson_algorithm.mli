@@ -1,4 +1,5 @@
 open Graph
+open Gfile
 
 (* A path is a list of nodes. *)
 type path
@@ -29,3 +30,6 @@ val update_residual_graph: int graph -> path -> int -> int graph
 (* get_max_flow graph source sink
  *   returns the max flow between the source and the sink on the given graph *)
 val get_max_flow: int graph -> id -> id -> int
+
+(* Same as get_max_flow but also creates text and graphviz files of the final graph *)
+val get_max_flow_with_output_graph: int graph -> id -> id -> Gfile.path -> int

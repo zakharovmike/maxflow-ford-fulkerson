@@ -77,21 +77,38 @@ let update_residual_graph graph path flow =
   let forward_updated_graph = loop graph path flow in                                 (* Subtract flow from forward arcs *)
   let backward_updated_graph = loop forward_updated_graph (List.rev path) (-flow) in  (* Add flow to their opposite backward arcs *)
   backward_updated_graph
-  
+
 
 (* Calculate the max flow between the source and the sink
  * on the given graph using the Ford-Fulkerson algorithm.
 *)
 let get_max_flow graph source sink =
 
-   let rec while_path_exists residual_graph flow =
+  let rec while_path_exists residual_graph flow =
     match (find_path residual_graph [] source sink) with
     | Some path -> 
       let bottleneck = find_bottleneck path residual_graph in
       let updated_residual_graph = update_residual_graph residual_graph path bottleneck in
+      while_path_exists updated_residual_graph (flow + bottleneck) ;
+    | None -> flow
+  in
+
+  let max_flow = while_path_exists graph 0 in
+  max_flow
+
+(* Same as get_max_flow but also creates text and graphviz files of the final graph *)
+let get_max_flow_with_output_graph graph source sink outfile =
+
+  let rec while_path_exists residual_graph flow =
+    match (find_path residual_graph [] source sink) with
+    | Some path -> 
+      let bottleneck = find_bottleneck path residual_graph in
+      let updated_residual_graph = update_residual_graph residual_graph path bottleneck in
+      export "final.gv" (gmap updated_residual_graph string_of_int) ;    (* Export final graph in dot format to visualize with Graphviz *)
+      write_file outfile (gmap updated_residual_graph string_of_int) ;   (* Export final graph in text format *)
       while_path_exists updated_residual_graph (flow + bottleneck)
     | None -> flow
-   in
+  in
 
-   let max_flow = while_path_exists graph 0 in
-   max_flow
+  let max_flow = while_path_exists graph 0 in
+  max_flow

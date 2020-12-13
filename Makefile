@@ -19,8 +19,9 @@ clean:
 	-rm -rf _build/
 	-rm ftest.native
 
-gviz: demo
-	dot -Tsvg gviz_out > gviz_out.svg
+gviz:
+	dot -Tsvg initial.gv > initial-graph.svg
+	dot -Tsvg final.gv > final-graph.svg
 
 test:
 	ocamlbuild -use-ocamlfind tests.byte

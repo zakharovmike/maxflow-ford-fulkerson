@@ -99,8 +99,8 @@ let from_file path =
   close_in infile ;
   final_graph
 
-  (* Export graph as Graphviz format file, saved in path.
-   * Allows for visualizing the graph as an SVG that is created with `make gviz` *)
+(* Export graph as Graphviz format file, saved in path.
+ * Allows for visualizing the graph as an SVG that is created with `make gviz` *)
 let export path graph =
 
   (* Open a write-file. *)

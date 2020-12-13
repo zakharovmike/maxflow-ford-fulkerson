@@ -25,16 +25,13 @@ let () =
   (* Open file *)
   let graph = from_file infile in
 
-  (* Export graph in dot format to visualize with Graphviz *)
-  let () = export "gviz_out" graph in
+  (* Export initial graph in dot format to visualize with Graphviz *)
+  let () = export "initial.gv" graph in
 
   (* Convert to int graph and find its max flow from source to sink *)
   let int_graph = gmap graph int_of_string in
-  let flow = get_max_flow int_graph source sink in
+  let flow = get_max_flow_with_output_graph int_graph source sink outfile in
   Printf.printf "\nmax flow from %d to %d: %d\n%!" source sink flow ;
-
-  (* Rewrite the graph that has been read. *)
-  let () = write_file outfile graph in
 
   ()
 
