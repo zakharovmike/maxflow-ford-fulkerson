@@ -18,6 +18,9 @@ demo: build
 clean:
 	-rm -rf _build/
 	-rm ftest.native
+	-rm initial*
+	-rm final*
+	-rm outfile
 
 gviz:
 	dot -Tsvg initial.gv > initial-graph.svg

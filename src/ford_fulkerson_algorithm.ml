@@ -17,26 +17,24 @@ let rec print_path = function
 let find_path graph forbidden_nodes source sink =
 
   let rec dfs visited node = 
-    if node = sink then Some empty_path else
+    if node = sink then Some (node :: empty_path) else
 
-    (* Find a node's adjacent nodes, avoiding:
-     *  - those that have already been visited, and
-     *  - those that are already saturated *)
-    let neighbors = List.filter
-      (fun (node, lbl) -> not (List.mem node visited) && lbl != 0) 
-      (out_arcs graph node)
-    in
-    match neighbors with
-    | [] -> None
-    | (next, _) :: _ ->
-      match dfs (next::visited) next with   (* Search for path from an adjacent node *)
-      | None -> dfs (next::visited) node    (* If no path found, retry from parent node, avoiding that adjacent node as well *)
-      | Some path -> Some (next :: path)    (* If a path has been found, contruct it on its way back up the call stack *)
+      (* Find a node's adjacent nodes, avoiding:
+       *  - those that have already been visited, and
+       *  - those that are already saturated *)
+      let neighbors = List.filter
+          (fun (node, lbl) -> not (List.mem node visited) && lbl != 0) 
+          (out_arcs graph node)
+      in
+      match neighbors with
+      | [] -> None
+      | (next, _) :: _ ->
+        match dfs (next::visited) next with   (* Search for path from an adjacent node *)
+        | None -> dfs (next::visited) node    (* If no path found, retry from parent node, avoiding that adjacent node as well *)
+        | Some path -> Some (node :: path)    (* If a path has been found, contruct it on its way back up the call stack *)
   in
 
-  match dfs forbidden_nodes source with
-  | Some path -> Some (source :: path)      (* If a path is found, add the source node to it and return  *)
-  | None -> None
+  dfs forbidden_nodes source
 
 let find_bottleneck path graph =
 
@@ -63,7 +61,7 @@ let find_bottleneck path graph =
  * is already going from A to B and thus how much flow can be removed from A->B.
  * All backward arcs start at 0 (non-existent) and flow is added to them.
  * If used in a path, it acts like a forward arc and its flow is subtracted.
- *)
+*)
 let update_residual_graph graph path flow =
 
   let rec loop graph path flow = 
